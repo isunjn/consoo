@@ -1,0 +1,28 @@
+{
+  "name": "consoo",
+  "version": "0.0.0",
+  "description": "`console.log()` wrappers for quick and dirty frontend debugging",
+  "author": "isunjn",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/consoo.d.ts",
+  "main": "./dist/consoo.umd.cjs",
+  "module": "./dist/consoo.js",
+  "exports": {
+    ".": {
+      "import": "./dist/consoo.js",
+      "require": "./dist/consoo.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.0"
+  }
+}
