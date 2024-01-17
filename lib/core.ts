@@ -8,14 +8,14 @@ export const defaultCfg = {
 
 type InitOption = {
   noop?: boolean;
-  alias?: string | string[];
+  name?: string | string[];
   global?: boolean;
 };
 
 export const init = (option?: InitOption) => {
   const {
     noop = false,
-    alias = [],
+    name = "consoo",
     global = true,
   } = option || {};
 
@@ -24,8 +24,8 @@ export const init = (option?: InitOption) => {
   }
 
   if (global) {
-    const aliases = Array.isArray(alias) ? alias : [alias];
-    ["consoo", ...aliases].forEach(name => {
+    const names = Array.isArray(name) ? name : [name];
+    names.forEach(name => {
       // @ts-expect-error
       window[name] = window[name] || consoo;
     });
