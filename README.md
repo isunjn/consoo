@@ -1,5 +1,1 @@
-consoo is a set of helper functions for quick and dirty frontend debugging.
-
-## Recipe
-
-| \
+[WIP] A set a helper functions for *quick and dirty* frontend debugging.
