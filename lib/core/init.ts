@@ -2,7 +2,7 @@ import type { Config, Consoo, ConsooInstance, InitOption } from "./type";
 import { defaultCfg } from "./cfg";
 
 import * as print from "../impl/print";
-// import * as wrapper from "../impl/wrapper";
+import * as wrapper from "../impl/wrapper";
 // import * as monitor from "../impl/monitor";
 // import * as helper from "../impl/helper";
 // import * as fancy from "../impl/fancy";
@@ -13,7 +13,7 @@ const make = (cfg: Partial<Config> = {}): ConsooInstance => ({
     ...cfg,
   },
   ...print,
-  // ...wrapper,
+  ...wrapper,
   // ...monitor,
   // ...helper,
   // ...fancy,
