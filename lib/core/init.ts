@@ -3,8 +3,8 @@ import { defaultCfg } from "./cfg";
 
 import * as print from "../impl/print";
 import * as wrapper from "../impl/wrapper";
+import * as helper from "../impl/helper";
 // import * as monitor from "../impl/monitor";
-// import * as helper from "../impl/helper";
 // import * as fancy from "../impl/fancy";
 
 const make = (cfg: Partial<Config> = {}): ConsooInstance => ({
@@ -14,8 +14,8 @@ const make = (cfg: Partial<Config> = {}): ConsooInstance => ({
   },
   ...print,
   ...wrapper,
+  ...helper,
   // ...monitor,
-  // ...helper,
   // ...fancy,
 });
 
@@ -36,7 +36,7 @@ export const init = (option?: InitOption) => {
   defaultCfg.prefix = prefix;
   defaultCfg.colors = colors || defaultCfg.colors;
 
-  const consoo = (mark: string) => make({ mark });
+  const consoo = (mark: string | number) => make({ mark });
   Object.assign(consoo, make());
 
   const names = Array.isArray(alias) ? alias : [alias];

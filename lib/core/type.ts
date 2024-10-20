@@ -14,11 +14,11 @@ export type InitOption = {
   colors?: Color[];
 };
 
-export type Config =
+export type Config = {
   defaultLogLevel: LogLevel;
   color?: Color;
   style: Record<string, string>;
-  mark: string | undefined;
+  mark: string | number | undefined;
   prefix: string;
   colors: Color[];
 };
@@ -48,6 +48,10 @@ export type ConsooFns = {
   profile: (label?: string) => void;
   profileEnd: (label?: string) => void;
 
+  inspect: {
+    <T>(data: T): T;
+    <T>(mark: string | number, data: T): T;
+  };
 };
 
 export type ConsooInstance = ConsooFns & {
@@ -55,5 +59,5 @@ export type ConsooInstance = ConsooFns & {
 };
 
 export type Consoo = ConsooFns & {
-  (mark: string): ConsooFns;
+  (mark: string | number): ConsooFns;
 };
