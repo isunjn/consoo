@@ -21,7 +21,6 @@ export const defaultCfg: Config = {
     padding: '2px 6px',
   },
   mark: '',
-  offset: 0,
   prefix: '',
   colors: defaultColors,
 };

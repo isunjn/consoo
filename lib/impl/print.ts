@@ -11,7 +11,7 @@ const hash = (input: string, max: number) => {
 };
 
 const print = (cfg: Config, level: LogLevel, args: any[]) => {
-  let { prefix, color, style, mark, offset, colors } = cfg;
+  let { prefix, color, style, mark, colors } = cfg;
 
   if (mark) {
     color = color ?? colors[hash(mark, colors.length)];
@@ -26,9 +26,8 @@ const print = (cfg: Config, level: LogLevel, args: any[]) => {
     .join(";");
 
   const prefixPart = prefix ? `${prefix} ` : "";
-  const offsetPart = "=> ".repeat(offset);
   const markPart = `%c${mark}\x1B[m`;
-  const formattar = `${prefixPart}${offsetPart}${markPart}`;
+  const formattar = `${prefixPart}${markPart}`;
 
   console[level](formattar, styleStr, ...args);
 };

@@ -36,7 +36,7 @@ export const init = (option?: InitOption) => {
   defaultCfg.prefix = prefix;
   defaultCfg.colors = colors || defaultCfg.colors;
 
-  const consoo = (mark: string, offset: number = 0) => make({ mark, offset });
+  const consoo = (mark: string) => make({ mark });
   Object.assign(consoo, make());
 
   const names = Array.isArray(alias) ? alias : [alias];
