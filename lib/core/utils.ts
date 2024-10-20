@@ -34,13 +34,18 @@ export const print = (
     ...override.style,
   };
 
-  const styleStr = Object.entries(style)
-    .map(([key, value]) => `${key}:${value}`)
-    .join(";");
+  let args = data;
+  if (prefix) {
+    args = [prefix, ...data];
+  }
+  if (mark) {
+    const markStyle = Object.entries(style)
+      .map(([k, v]) => `${k}:${v}`)
+      .join(";");
+    const resetStyle = "";
+    const formattar = `${prefix}${prefix ? " " : ""}${`%c ${mark} %c`}`;
+    args = [formattar, markStyle, resetStyle, ...data];
+  }
 
-  const prefixPart = prefix ? `${prefix} ` : "";
-  const markPart = `%c${mark}\x1B[m`;
-  const formattar = `${prefixPart}${markPart}`;
-
-  console[level](formattar, styleStr, ...data);
+  console[level](...args);
 };

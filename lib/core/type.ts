@@ -24,11 +24,11 @@ export type Config = {
 };
 
 export type ConsooFns = {
-  log: (...args: any[]) => void;
-  info: (...args: any[]) => void;
-  warn: (...args: any[]) => void;
-  error: (...args: any[]) => void;
-  debug: (...args: any[]) => void;
+  log: (...data: any[]) => void;
+  info: (...data: any[]) => void;
+  warn: (...data: any[]) => void;
+  error: (...data: any[]) => void;
+  debug: (...data: any[]) => void;
 
   assert: (condition?: boolean, ...data: any[]) => void;
   clear: () => void;
@@ -48,10 +48,15 @@ export type ConsooFns = {
   profile: (label?: string) => void;
   profileEnd: (label?: string) => void;
 
+  v: (VConsoleInitOption?: { theme: "dark" | "light" }) => void;
+  pause: (delay?: number) => void;
+  sep: (repeator?: string, len?: number) => void;
   inspect: {
     <T>(data: T): T;
     <T>(mark: string | number, data: T): T;
   };
+  traceFn: <F extends Function>(fn: F, ctx?: any) => F;
+  traceProp: (obj: Record<string, unknown>, prop: string) => void;
 };
 
 export type ConsooInstance = ConsooFns & {
