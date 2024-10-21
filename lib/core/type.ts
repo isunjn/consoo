@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    __consoo_state: Record<string, any> | undefined;
+  }
+}
+
 export type LogLevel = "info" | "warn" | "error" | "debug";
 
 export type Color = {
