@@ -5,7 +5,7 @@ import * as print from "../impl/print";
 import * as wrapper from "../impl/wrapper";
 import * as helper from "../impl/helper";
 import * as monitor from "../impl/monitor";
-// import * as fancy from "../impl/fancy";
+import * as fancy from "../impl/fancy";
 
 const make = (cfg: Partial<Config> = {}): ConsooInstance => ({
   cfg: {
@@ -16,7 +16,7 @@ const make = (cfg: Partial<Config> = {}): ConsooInstance => ({
   ...wrapper,
   ...helper,
   ...monitor,
-  // ...fancy,
+  ...fancy,
 });
 
 export const init = (option?: InitOption) => {
