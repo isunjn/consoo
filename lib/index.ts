@@ -1,5 +1,3 @@
-import type { Consoo } from "./core/type";
-import { init } from "./core/init";
-
-export type { Consoo };
+import { init } from "./core";
 export default { init };
+export { type Consoo } from "./core";
