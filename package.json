@@ -1,7 +1,7 @@
 {
   "name": "consoo",
-  "version": "0.0.0",
-  "description": "`console.log()` wrappers for quick and dirty frontend debugging",
+  "version": "0.0.1",
+  "description": "A set of helper functions for quick and dirty frontend debugging",
   "author": "isunjn",
   "type": "module",
   "files": [
