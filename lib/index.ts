@@ -1,3 +1,1 @@
-import { init } from "./core";
-export default { init };
-export { type Consoo } from "./core";
+export { init as initConsoo, type Consoo } from "./core";
