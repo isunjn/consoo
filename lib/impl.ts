@@ -121,7 +121,12 @@ export function inspect<T>(markOrData: string | number | T, data?: T): T {
 
 export const traceFn = <F extends Function>(fn: F, ctx?: any): F =>
   function (this: any) {
-    console.trace(...styled(`[${fn.name}] called with arguments:`, arguments));
+    console.trace(
+      ...styled(
+        `[${fn.name || "anonymous"}] called with arguments:`,
+        arguments,
+      ),
+    );
     return fn.apply(ctx || this, arguments);
   } as unknown as F;
 
@@ -140,7 +145,9 @@ export const traceProp = (obj: Record<string, unknown>, prop: string) => {
 };
 
 export function monitorActiveElement() {
-  if (window.__consoo_state.monitorActiveFlag) return;
+  if (window.__consoo_state.monitorActiveFlag) {
+    return stopMonitorActiveElement;
+  }
   window.__consoo_state.monitorActiveFlag = true;
 
   let last = document.activeElement;

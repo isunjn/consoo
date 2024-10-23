@@ -13,12 +13,12 @@ type Color = {
   fg: string;
 };
 
-type InitOption = {
+export type InitOption = {
   noop?: boolean;
   alias?: string | string[];
   defaultLogLevel?: LogLevel;
   prefix?: string;
-  markStyle: Record<string, string>;
+  markStyle?: Record<string, string>;
   markColors?: Color[];
 };
 
@@ -53,16 +53,55 @@ type ConsooFns = {
   profile: (label?: string) => void;
   profileEnd: (label?: string) => void;
 
+  /**
+   * Load and initialize [vConsole](https://github.com/Tencent/vConsole)
+   * @param VConsoleInitOption - Options for vConsole
+   */
   v: (VConsoleInitOption?: { theme: "dark" | "light" }) => void;
+  /**
+   * Pause the execution with a debugger after {delay} ms
+   * @param delay - The delay in milliseconds, defalut is 0
+   */
   pause: (delay?: number) => void;
+  /**
+   * Print a separator line
+   * @param repeator - The character to repeat, default is '='
+   * @param len - The length of the line, default is 80
+   */
   sep: (repeator?: string, len?: number) => void;
   inspect: {
+    /**
+     * Print and return
+     * @param data - The expression to inspect
+     */
     <T>(data: T): T;
+    /**
+     * Print and return
+     * @param mark - A string or number to be printed with colors
+     * @param data - The expression to inepect
+     */
     <T>(mark: string | number, data: T): T;
   };
+  /**
+   * Create a new version of the input function that will console.trace() when called
+   * @param fn - The function to trace
+   * @param ctx - The context to bind to
+   */
   traceFn: <F extends Function>(fn: F, ctx?: any) => F;
+  /**
+   * Trace the get() and set() of an object property
+   * @param obj - The object to trace
+   * @param prop - The property name
+   */
   traceProp: (obj: Record<string, unknown>, prop: string) => void;
-  monitorActiveElement: () => void;
+  /**
+   * Monitor the active element in the document
+   * @return A function to stop monitoring
+   */
+  monitorActiveElement: () => () => void;
+  /**
+   * Stop monitoring the active element in the document
+   */
   stopMonitorActiveElement: () => void;
 };
 
@@ -71,6 +110,10 @@ export type ConsooInstance = ConsooFns & {
 };
 
 export type Consoo = ConsooFns & {
+  /**
+   * Create a new consoo instance with a mark
+   * @param mark - A string or number to be printed with colors
+   */
   (mark: string | number): ConsooFns;
 };
 
@@ -106,19 +149,20 @@ export const init = (option?: InitOption) => {
     markColors = cfg.markColors,
   } = option || {};
 
-  if (noop) {
-    // TODO: make a no-op consoo instance
-  }
-
   cfg.level = defaultLogLevel;
   cfg.prefix = prefix;
   cfg.markStyle = markStyle;
   cfg.markColors = markColors;
 
-  const make = (mark?: string | number): ConsooInstance => ({
-    mark,
-    ...helpers,
-  });
+  const make = (mark?: string | number): ConsooInstance =>
+    noop
+      ? (Object.fromEntries(
+          Object.keys(helpers).map((fn) => [fn, () => {}]),
+        ) as any)
+      : {
+          mark,
+          ...helpers,
+        };
 
   const consoo = (mark?: string | number) => make(mark);
   Object.assign(consoo, make());
