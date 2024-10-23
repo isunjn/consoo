@@ -142,7 +142,7 @@ export const cfg: Config = {
 export const init = (option?: InitOption) => {
   const {
     noop = false,
-    alias = [],
+    alias = "consoo",
     defaultLogLevel = "info",
     prefix,
     markStyle = cfg.markStyle,
@@ -168,7 +168,7 @@ export const init = (option?: InitOption) => {
   Object.assign(consoo, make());
 
   const names = Array.isArray(alias) ? alias : [alias];
-  ["consoo", ...names].forEach((name) => {
+  names.forEach((name) => {
     // @ts-ignore
     window[name] = window[name] || (consoo as Consoo);
   });
