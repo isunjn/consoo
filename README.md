@@ -49,13 +49,13 @@ Init options and the defaults:
 
 ```ts
 initConsoo({
-  noop: false, // boolean, if true, all methods will be no-op
+  noop: false, // if true, all methods will be no-op
   alias: "consoo", // string | string[], global access names, e.g. "so"
-  defaultLogLevel: "info", // "info" | "warn" | "error" | "debug" , default log level
+  defaultLogLevel: "info", // "info" | "warn" | "error" | "debug"
   prefix: undefined, // string | undefined, prefix for all messages
   markStyle: {
     padding: "2px",
-  }, // mark style
+  }, // mark css style
   markColors: [
     { bg: "#5151db", fg: "#fff" },
     { bg: "#5cc290", fg: "#fff" },
@@ -130,7 +130,7 @@ foo(1, 2); // will print the call stack and arguments
 - Print the call stack every time the specific object property is accessed (get or set).
 
 ```ts
-consoo.traceObj(obj, "prop");
+consoo.traceProp(obj, "prop");
 ```
 
 - Monitor the `document.activeElement` change.

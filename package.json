@@ -1,8 +1,21 @@
 {
   "name": "consoo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A set of helper functions for quick and dirty frontend debugging",
+  "keywords": [
+    "debugging",
+    "console",
+    "devtools",
+    "debug",
+    "typescript",
+    "log"
+  ],
   "author": "isunjn",
+  "homepage": "https://github.com/isunjn/consoo",
+  "bugs": {
+    "url": "https://github.com/isunjn/consoo/issues"
+  },
+  "license": "MIT",
   "type": "module",
   "files": [
     "dist"
