@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@types/node':
-        specifier: ^20.17.0
-        version: 20.17.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -863,6 +860,7 @@ snapshots:
   '@types/node@20.17.0':
     dependencies:
       undici-types: 6.19.8
+    optional: true
 
   '@volar/language-core@2.4.6':
     dependencies:
@@ -1147,7 +1145,8 @@ snapshots:
 
   ufo@1.5.4: {}
 
-  undici-types@6.19.8: {}
+  undici-types@6.19.8:
+    optional: true
 
   universalify@0.1.2: {}
 

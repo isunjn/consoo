@@ -4,6 +4,10 @@ declare global {
   interface Window {
     __consoo_state: Record<string, any>;
   }
+  interface Console {
+    profile: (label?: string) => void;
+    profileEnd: (label?: string) => void;
+  }
 }
 
 type LogLevel = "info" | "warn" | "error" | "debug";
