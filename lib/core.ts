@@ -12,28 +12,28 @@ declare global {
 
 type LogLevel = "info" | "warn" | "error" | "debug";
 
-type Color = {
+interface Color {
   bg: string;
   fg: string;
-};
+}
 
-export type InitOption = {
+interface InitOption {
   noop?: boolean;
   alias?: string | string[];
   defaultLogLevel?: LogLevel;
   prefix?: string;
   markStyle?: Record<string, string>;
   markColors?: Color[];
-};
+}
 
-type Config = {
+interface Config {
   level: LogLevel;
   prefix?: string;
   markStyle: Record<string, string>;
   markColors: Color[];
-};
+}
 
-type ConsooFns = {
+interface ConsooFns {
   log: (...data: any[]) => void;
   info: (...data: any[]) => void;
   warn: (...data: any[]) => void;
@@ -107,19 +107,19 @@ type ConsooFns = {
    * Stop monitoring the active element in the document
    */
   stopMonitorActiveElement: () => void;
-};
+}
 
-export type ConsooInstance = ConsooFns & {
+export interface ConsooInstance extends ConsooFns {
   mark?: string | number;
-};
+}
 
-export type Consoo = ConsooFns & {
+export interface Consoo extends ConsooFns {
   /**
    * Create a new consoo instance with a mark
    * @param mark - A string or number to be printed with colors
    */
   (mark: string | number): ConsooFns;
-};
+}
 
 export const cfg: Config = {
   level: "info",
