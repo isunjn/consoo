@@ -1,6 +1,6 @@
 {
   "name": "consoo",
-  "version": "0.1.0",
+  "version": "0.0.3",
   "description": "A set of helper functions for quick and dirty frontend debugging",
   "keywords": [
     "debugging",
