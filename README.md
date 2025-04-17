@@ -1,48 +1,43 @@
 # consoo
 
+![version](https://img.shields.io/npm/v/consoo)
+![donwloads](https://img.shields.io/npm/dw/consoo)
+![license](https://img.shields.io/npm/l/consoo)
+
 A set of helper functions for **_quick and dirty_** frontend debugging.
+
+![](./intro.png)
 
 ## Usage
 
-First, install the package:
+Install:
 
 ```sh
-npm install -D consoo
-# or
 pnpm install -D consoo
 ```
 
-Then, import and initialize:
+Import and initialize:
 
 ```js
 import { initConsoo } from "consoo";
 
+// this will make `consoo` a global variable
 initConsoo({
-  // ... init options
+  // ...options
 });
 
 consoo.log("foo");
-consoo("bar").debug("baz");
-// ...
+consoo("mark").log("foo");
 ```
 
-If you use typescirpt:
+For typescirpt:
 
 ```ts
-import { initConsoo, type Consoo } from "consoo";
+import { type Consoo } from "consoo";
 
 declare global {
-  const so: Consoo;
+  const consoo: Consoo;
 }
-
-initConsoo({
-  alias: "so",
-  // ... init options
-});
-
-so.log("foo");
-so("bar").debug("baz");
-// ...
 ```
 
 Init options and the defaults:
@@ -75,27 +70,32 @@ initConsoo({
 
 ## Helpers
 
-### console wrapper & message mark
+### console wrapper
 
-- All console methods are also available in `consoo` object:
-  `log` `info` `warn` `error` `debug` `trace`
-  `dir` `dirxml` `table` `group` `groupCollapsed` `groupEnd`
-  `clear` `count` `countReset` `assert` `time` `timeLog` `timeEnd` `timeStamp`
-  `profile` `profileEnd`
-
-- `consoo` can be called with a string or number first, which will be printed with a colored background,
-  acting as a mark/tag for the following message.
+All console methods are also available in `consoo` object:
+  - `log` `info` `warn` `error` `debug` `trace`
+  - `dir` `dirxml` `table` `group` `groupCollapsed` `groupEnd`
+  - `clear` `count` `countReset` `assert` `time` `timeLog` `timeEnd` `timeStamp`
+  - `profile` `profileEnd`
 
 ```ts
 consoo.log("foo");
+```
+
+### message mark
+
+`consoo` can be called with a string or number first, which will be printed with a colored background,
+  acting as a mark/tag for the following message.
+
+```ts
 consoo("mark").log("foo");
 ```
 
 ### pause after delay
 
-- Pause the script execution after a delay, can be useful when debugging hover-state ui or dom-changing issues.
+Pause the script execution after a delay, can be useful when debugging hover-state ui or dom-changing issues.
 
-- You may call it directly in devtools console.
+You may call this directly in devtools console.
 
 ```ts
 consoo.pause(3000); // default delay is 0 ms
@@ -103,15 +103,15 @@ consoo.pause(3000); // default delay is 0 ms
 
 ### message separator
 
-- Print a separator line in the console panel.
+Print a separator line in the console panel.
 
 ```ts
 consoo.sep("=", 80); // (repeator?: string, len?: number) => void
 ```
 
-### inspect & trace & monitor
+### expression inspect
 
-- Inspect (print to console) a variable or expression, return the value as is,
+Inspect (print to console) a variable or expression, return the value as is,
   can be useful when you don't borther to add a separate `console.log` line or re-type all the expression.
 
 ```ts
@@ -119,7 +119,9 @@ consoo.inspect(foo);
 consoo.inspect("mark", foo + bar * baz); // you can add a mark too
 ```
 
-- Print the call stack and arguments every time the specific function is called.
+### trace function call
+
+Print the call stack and arguments every time the specific function is called.
 
 ```ts
 let foo = (a, b) => a + b;
@@ -127,13 +129,17 @@ foo = consoo.traceFn(foo);
 foo(1, 2); // will print the call stack and arguments
 ```
 
-- Print the call stack every time the specific object property is accessed (get or set).
+### trace object prop access
+
+Print the call stack every time the specific object property is accessed (get or set).
 
 ```ts
 consoo.traceProp(obj, "prop");
 ```
 
-- Monitor the `document.activeElement` change.
+### monitor active element
+
+Print `document.activeElement` when it changes.
 
 ```ts
 consoo.monitorActiveElement(); // return a function to stop monitoring
@@ -142,7 +148,7 @@ consoo.stopMonitorActiveElement(); // or you can stop it directly
 
 ### vconsole for mobile debugging
 
-- Load and initialize [vConsole](https://github.com/Tencent/vConsole) (A simulated devtool for mobile web page) on the fly, without installing it as a dependency.
+Load and initialize [vConsole](https://github.com/Tencent/vConsole) (A simulated devtool for mobile web page) on the fly, without installing it as a dependency.
 
 ```ts
 consoo.v(); // (VConsoleInitOption?: { theme: "dark" | "light" }) => void
