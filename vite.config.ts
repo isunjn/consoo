@@ -8,7 +8,9 @@ export default defineConfig({
       entry: resolve(__dirname, 'lib/index.ts'),
       name: 'consoo',
       fileName: 'consoo',
+      formats: ['es']
     },
+    minify: false,
   },
   plugins: [dts({ rollupTypes: true })],
 });
