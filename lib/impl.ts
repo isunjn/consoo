@@ -69,7 +69,7 @@ export function trace(...data: any[]) {
 }
 
 export function log(this: ConsooInstance, ...data: any[]) {
-  console[cfg.level](...styled(this.mark, ...data));
+  console[cfg.logLevel](...styled(this.mark, ...data));
 }
 
 export function info(this: ConsooInstance, ...data: any[]) {
@@ -105,7 +105,7 @@ export function pause(delay: number = 0) {
 }
 
 export function sep(repeator: string = "=", len: number = 80) {
-  console[cfg.level](
+  console[cfg.logLevel](
     `\n${cfg.prefix ? cfg.prefix + " " : ""}${repeator.repeat(Math.floor(len / repeator.length))}\n\n`,
   );
 }
@@ -115,7 +115,7 @@ export function inspect<T>(mark: string | number, data: T): T;
 export function inspect<T>(markOrData: string | number | T, data?: T): T {
   const mark = arguments.length === 1 ? "" : (markOrData as string | number);
   data = arguments.length === 1 ? (markOrData as T) : (data as T);
-  console[cfg.level](...styled(mark, data));
+  console[cfg.logLevel](...styled(mark, data));
   return data;
 }
 
@@ -145,16 +145,16 @@ export const traceProp = (obj: Record<string, unknown>, prop: string) => {
 };
 
 export function monitorActiveElement() {
-  if (window.__consoo_state.monitorActiveFlag) {
+  if (window.__consoo_state.monitorActiveElementFlag) {
     return stopMonitorActiveElement;
   }
-  window.__consoo_state.monitorActiveFlag = true;
+  window.__consoo_state.monitorActiveElementFlag = true;
 
-  let last = document.activeElement;
-  window.__consoo_state.monitorActiveTimeoutId = setInterval(() => {
-    if (document.activeElement !== last) {
-      last = document.activeElement;
-      console[cfg.level](...styled("document.activeElement:", last));
+  let activeElement = document.activeElement;
+  window.__consoo_state.monitorActiveElementTimer = setInterval(() => {
+    if (document.activeElement !== activeElement) {
+      activeElement = document.activeElement;
+      console[cfg.logLevel](...styled("document.activeElement:", activeElement));
     }
   }, 100);
 
@@ -162,6 +162,6 @@ export function monitorActiveElement() {
 }
 
 export function stopMonitorActiveElement() {
-  window.__consoo_state.monitorActiveFlag = false;
-  clearInterval(window.__consoo_state.monitorActiveTimeoutId);
+  window.__consoo_state.monitorActiveElementFlag = false;
+  clearInterval(window.__consoo_state.monitorActiveElementTimer);
 }

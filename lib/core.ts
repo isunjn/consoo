@@ -2,7 +2,10 @@ import * as helpers from "./impl";
 
 declare global {
   interface Window {
-    __consoo_state: Record<string, any>;
+    __consoo_state: {
+      monitorActiveElementFlag?: boolean;
+      monitorActiveElementTimer?: number;
+    };
   }
   interface Console {
     profile: (label?: string) => void;
@@ -27,7 +30,7 @@ interface InitOption {
 }
 
 interface Config {
-  level: LogLevel;
+  logLevel: LogLevel;
   prefix?: string;
   markStyle: Record<string, string>;
   markColors: Color[];
@@ -62,47 +65,54 @@ interface ConsooFns {
    * @param VConsoleInitOption - Options for vConsole
    */
   v: (VConsoleInitOption?: { theme: "dark" | "light" }) => void;
+
   /**
    * Pause the execution with a debugger after {delay} ms
    * @param delay - The delay in milliseconds, defalut is 0
    */
   pause: (delay?: number) => void;
+
   /**
    * Print a separator line
    * @param repeator - The character to repeat, default is '='
    * @param len - The length of the line, default is 80
    */
   sep: (repeator?: string, len?: number) => void;
+
   inspect: {
     /**
-     * Print and return
+     * Print and return as is
      * @param data - The expression to inspect
      */
     <T>(data: T): T;
     /**
-     * Print and return
+     * Print and return as is
      * @param mark - A string or number to be printed with colors
      * @param data - The expression to inepect
      */
     <T>(mark: string | number, data: T): T;
   };
+
   /**
-   * Create a new version of the input function that will console.trace() when called
+   * Create a new version of the input function that will call console.trace() when called
    * @param fn - The function to trace
    * @param ctx - The context to bind to
    */
   traceFn: <F extends Function>(fn: F, ctx?: any) => F;
+
   /**
    * Trace the get() and set() of an object property
    * @param obj - The object to trace
    * @param prop - The property name
    */
   traceProp: (obj: Record<string, unknown>, prop: string) => void;
+
   /**
    * Monitor the active element in the document
    * @return A function to stop monitoring
    */
   monitorActiveElement: () => () => void;
+
   /**
    * Stop monitoring the active element in the document
    */
@@ -122,7 +132,7 @@ export interface Consoo extends ConsooFns {
 }
 
 export const cfg: Config = {
-  level: "info",
+  logLevel: "info",
   prefix: undefined,
   markStyle: {
     padding: "2px",
@@ -153,29 +163,28 @@ export const init = (option?: InitOption) => {
     markColors = cfg.markColors,
   } = option || {};
 
-  cfg.level = defaultLogLevel;
+  cfg.logLevel = defaultLogLevel;
   cfg.prefix = prefix;
   cfg.markStyle = markStyle;
   cfg.markColors = markColors;
 
-  const make = (mark?: string | number): ConsooInstance =>
-    noop
-      ? (Object.fromEntries(
-          Object.keys(helpers).map((fn) => [fn, () => {}]),
-        ) as any)
-      : {
-          mark,
-          ...helpers,
-        };
+  const make = (mark?: string | number): ConsooInstance => {
+    if (noop) {
+      return Object.fromEntries(Object.keys(helpers).map((fn) => [fn, () => {}])) as unknown as ConsooInstance;
+    }
+    return {
+      mark: mark,
+      ...helpers,
+    };
+  }
 
   const consoo = (mark?: string | number) => make(mark);
   Object.assign(consoo, make());
 
   const names = Array.isArray(alias) ? alias : [alias];
-  names.forEach((name) => {
-    // @ts-ignore
-    window[name] = window[name] || (consoo as Consoo);
-  });
+  // @ts-ignore
+  names.forEach(name => window[name] = consoo);
+
   window.__consoo_state = {};
 };
 
