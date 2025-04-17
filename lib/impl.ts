@@ -123,7 +123,7 @@ export const traceFn = <F extends Function>(fn: F, ctx?: any): F =>
   function (this: any) {
     console.trace(
       ...styled(
-        `[${fn.name || "anonymous"}] called with arguments:`,
+        `[${fn.name || "anonymous"}] called with:`,
         arguments,
       ),
     );
@@ -134,11 +134,11 @@ export const traceProp = (obj: Record<string, unknown>, prop: string) => {
   let value = obj[prop];
   Object.defineProperty(obj, prop, {
     get() {
-      console.trace(...styled(`prop [${prop}] requested`));
+      console.trace(...styled(`get prop [${prop}]`));
       return value;
     },
     set(newValue) {
-      console.trace(...styled(`setting prop [${prop}] to:`, newValue));
+      console.trace(...styled(`set prop [${prop}]:`, newValue));
       value = newValue;
     },
   });
