@@ -6,7 +6,7 @@
 
 A set of helper functions for **_quick and dirty_** frontend debugging.
 
-![](./intro.png)
+![](https://github.com/isunjn/consoo/blob/main/intro.png?raw=true)
 
 ## Usage
 
